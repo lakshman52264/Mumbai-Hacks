@@ -1,0 +1,96 @@
+goal_analysis_task:
+  description: >
+    Perform comprehensive financial goal analysis including feasibility assessment, progress tracking, and AI insights.
+
+    **Input Goal:**
+    - Goal Title: {goal_title}
+    - Target Amount: ₹{target_amount}
+    - Current Amount: ₹{current_amount}
+    - Duration (months): {duration_months}
+    - Priority: {priority}
+    - Category: {category}
+    - Analysis Context: {context} (create/update/payment)
+
+    **Your Comprehensive Analysis:**
+    1. IMPORTANT: Always use the user_id from the inputs ({user_id}), never use placeholder IDs like "user123".
+    2. Use fetch_user_financials tool to get income, expenses, savings, and existing goals.
+    
+    **Feasibility Analysis:**
+    3. Compute recommended monthly contribution based on target and duration
+    4. Calculate earliest completion date considering current financial situation
+    5. Determine feasibility (true/false) based on available funds after commitments
+    6. Assign risk level (low/medium/high) based on percentage of disposable income
+    
+    **Progress & Insights:**
+    7. Calculate progress percentage: (current_amount / target_amount) * 100
+    8. Generate AI insights about goal achievability and financial health
+    9. Create 3-5 personalized recommendations for goal achievement
+    10. For updates/payments: Reassess feasibility and update insights
+    
+    **Actions:**
+    11. Update goal document with ALL analysis results using update_goal tool. IMPORTANT: The updates dict MUST include:
+        - feasible (boolean)
+        - monthly_contribution (float)
+        - risk_level (string)
+        - completion_months (int)
+        - ai_insights (string) - REQUIRED, do not omit
+        - recommendations (list of strings) - REQUIRED, do not omit
+    12. **Draft Email Content:** Create a professional email body in Markdown format.
+        The email should ONLY contain the body content (no subject line) and must use Markdown formatting.
+        Include:
+        - Brief greeting
+        - Goal details with Markdown headers (##, ###)
+        - **Feasibility status** and **Risk level** in bold
+        - Recommended monthly contribution and timeline
+        - AI insights and progress assessment
+        - Personalized recommendations (numbered list)
+        - Encouraging closing message
+        
+        Example:
+        ```
+        Hello,
+        
+        ## 🎯 Goal Analysis Complete: {goal_title}
+        
+        We've analyzed your financial goal comprehensively. Here's what we found.
+        
+        ### Goal Details
+        - **Target Amount**: ₹{target_amount}
+        - **Current Progress**: ₹{current_amount} (X%)
+        - **Category**: {category}
+        - **Priority**: {priority}
+        
+        ### Feasibility Assessment
+        **Status**: Feasible/Not Feasible
+        **Risk Level**: High/Medium/Low
+        **Recommended Monthly Contribution**: ₹X,XXX
+        **Estimated Completion**: X months
+        
+        ### AI Insights
+        [Detailed insights about goal achievability, financial health, and progress]
+        
+        ### Personalized Recommendations
+        1. [Recommendation 1]
+        2. [Recommendation 2]
+        3. [Recommendation 3]
+        
+        Keep up the great work!
+        FinPath Goals Team
+        ```
+    
+    13. Create alert using create_alert tool with type="goals", alert_type="goals", risk_level from analysis, email_content from above, email_sent=false
+
+  expected_output: >
+    A GoalAnalysisResult object with the following fields:
+    
+    - feasible: boolean indicating if the goal is achievable
+    - monthly_contribution: number representing the recommended monthly amount
+    - risk_level: string ("low", "medium", or "high") based on financial strain
+    - reason: string explaining the feasibility assessment
+    - completion_months: integer for estimated months to complete
+    - progress_updated: boolean (always true after analysis)
+    - ai_insights: string with personalized insights about goal achievability
+    - recommendations: list of 3-5 actionable recommendation strings
+    
+    Return the structured data directly without any markdown formatting or code blocks.
+  agent: goal_analysis_agent
