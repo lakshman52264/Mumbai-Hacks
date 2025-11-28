@@ -1,0 +1,103 @@
+recurring_detection_task:
+  description: >
+    Analyze this Indian banking transaction to detect if it's part of a recurring pattern.
+
+    **Transaction Details:**
+    - Transaction ID: {transaction_id}
+    - User ID: {user_id}
+    - Amount: ₹{amount}
+    - Type: {type}
+    - Description/Narration: {description}
+    - Date: {date}
+
+    **Your Task (Recurring Detection):**
+    1. Call the detect_recurring_transaction tool exactly once with the following JSON object:
+       {
+         "user_id": "{user_id}",
+         "transaction_data": {
+           "merchant": "extracted_merchant_name",
+           "amount": {amount},
+           "type": "{type}",
+           "description": "{description}",
+           "date": "{date}"
+         }
+       }
+       Extract the merchant name from the description (e.g., from UPI formats like "UPI/DR/REF/MERCHANT/DESC").
+    2. Analyze the returned data to determine if this transaction is part of a recurring payment pattern.
+    3. Look for:
+       - Regular payments to the same merchant (date spacing / frequency)
+       - Subscription services (Netflix, Prime, Spotify, Hotstar, etc.)
+       - EMI/installment payments
+       - Monthly bills and utilities
+       - Other recurring financial activities
+    4. If the history is inconclusive, perform heuristic checks on the merchant string (keywords, known subscription merchants, typical EMI/bank codes) and mark as "potential" when appropriate.
+
+    **Additional hints:**
+    - Treat NETFLIX, SPOTIFY, AMAZON PRIME, DISNEY+, HOTSTAR, ZEE5, ALTBalaji, MX Player as subscription-strong signals.
+    - Use fuzzy matching / normalization (uppercase, trim punctuation) for merchant comparison.
+    - Return any evidence examples (dates / amounts) to justify frequency.
+
+    **Important Context:**
+    - This is an Indian banking transaction.
+    - UPI descriptions often follow: UPI/TYPE/REFERENCE/MERCHANT/DETAILS.
+
+  expected_output: >
+    A structured recurring analysis (JSON-like) containing:
+    {
+      "is_recurring": bool,
+      "frequency": int,                # number of historical matches
+      "pattern": "subscription"|"emi"|"bill"|"regular"|null,
+      "confidence": float,             # 0.0 - 1.0
+      "reasoning": str,
+      "evidence_examples": list        # optional small list of matched transactions
+    }
+  agent: recurring_detection_agent
+
+categorization_task:
+  description: >
+    Using the transaction details AND the output from the recurring_detection_task (passed as context),
+    produce a final categorization, merchant refinement, smart insights, and update Firestore.
+
+    **Transaction Details:**
+    - Transaction ID: {transaction_id}
+    - User ID: {user_id}
+    - Amount: ₹{amount}
+    - Type: {type}
+    - Description/Narration: {description}
+    - Date: {date}
+
+    **Your Tasks (Categorization):**
+    1 MERCHANT: Extract and refine the merchant name (handle UPI formats like "UPI/DR/REF/MERCHANT/DESC").
+       ALWAYS use web search to research the merchant by searching for JUST the merchant name (e.g., "Compass") without adding words like "UPI", "merchant", or "India" to get accurate business information.
+       This helps ensure accurate categorization based on the merchant's actual business type.
+    2 CATEGORY: Assign ONE category from:
+       Food & Dining, Groceries, Transportation, Shopping, Entertainment, Bills & Utilities, Healthcare,
+       Education, Travel, Insurance, Investments, EMI/Loan, Subscriptions, Transfers, Cash Withdrawal,
+       Recharge & Bill Payments, Online Shopping, Fuel, Rent, Other.
+    3. USE CONTEXT: Use ONLY the output provided by the recurring_detection_task as recurring context.
+    4. SMART INSIGHTS:
+       - Flag EMI payments (look for 'EMI', 'INST', bank EMI tokens)
+       - Identify subscription services (Netflix, Prime, Spotify, etc.)
+       - Flag bill payments (electricity, water, mobile recharge)
+       - Differentiate cash withdrawals vs merchant payments
+    5. UPDATE FIRESTORE: Use the update_transaction_in_firestore tool to save:
+       - category
+       - refined_merchant
+       - is_recurring
+       - is_emi
+       - is_subscription
+       - confidence_score
+       - ai_insights
+
+    **Important Context & Restrictions:**
+    - Do NOT call detect_recurring_transaction inside this task. Only use the recurring_detection_task output that was provided as context.
+    - Be resilient to typos and abbreviations (e.g., "N TFLX" → "Netflix").
+    - Provide concise reasoning for each decision and include confidence (0.0–1.0).
+    You MUST call update_transaction_in_firestore exactly once before producing your Final Answer.
+    Do not produce the Final Answer until after the tool call completes.
+
+  expected_output: >
+    STOP after outputting the JSON. Your FINAL ANSWER must be ONLY valid JSON with absolutely NO text after the closing brace.
+    {"category":"value","refined_merchant":"value","is_recurring":false,"is_emi":false,"is_subscription":false,"confidence_score":0.95,"ai_insights":"value"}
+  agent: categorization_agent
+  context: [recurring_detection_task]

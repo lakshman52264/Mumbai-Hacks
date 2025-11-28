@@ -1,0 +1,946 @@
+[
+  {
+    "date": "2025-10-21",
+    "type": "debit",
+    "merchant": "ETC Toll",
+    "category": "transport",
+    "amount": 449.00,
+    "description": "UPI/DR//ETC Toll/ICIC/netc./Payme - TRANSFER TO"
+  },
+  {
+    "date": "2025-10-21",
+    "type": "debit",
+    "merchant": "A K AJITH",
+    "category": "other",
+    "amount": 3148.00,
+    "description": "UPI/DR//A K AJITH/ICIC//Paym - TRANSFER TO"
+  },
+  {
+    "date": "2025-10-19",
+    "type": "debit",
+    "merchant": "Indian O",
+    "category": "other",
+    "amount": 2000.00,
+    "description": "UPI/DR//Indian O/YESB/Q/Payme"
+  },
+  {
+    "date": "2025-10-18",
+    "type": "debit",
+    "merchant": "Snapmint",
+    "category": "shopping",
+    "amount": 3596.00,
+    "description": "UPI/DR//Snapmint/UTI B/snapmint.p/Payme"
+  },
+  {
+    "date": "2025-10-18",
+    "type": "credit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 3600.00,
+    "description": "UPI/CR//SHREYA KV/SBIN//Pai"
+  },
+  {
+    "date": "2025-10-17",
+    "type": "debit",
+    "merchant": "A K AJITH",
+    "category": "other",
+    "amount": 320.00,
+    "description": "UPI/DR//A K AJITH/ICIC//Paym"
+  },
+  {
+    "date": "2025-10-17",
+    "type": "credit",
+    "merchant": "BRAHMAIA",
+    "category": "other",
+    "amount": 3500.00,
+    "description": "UPI/CR//BRAHMAIA/H DFC//Payme"
+  },
+  {
+    "date": "2025-10-16",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 37.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-16",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 45.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "debit",
+    "merchant": "BLUE DAR",
+    "category": "shopping",
+    "amount": 550.00,
+    "description": "UPI/DR//BLUE DAR/HDFC/bluedartex/Gener"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "debit",
+    "merchant": "AMAZON",
+    "category": "shopping",
+    "amount": 654.00,
+    "description": "OTHPG AMAZON Mumbai"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "debit",
+    "merchant": "Airtel R",
+    "category": "other",
+    "amount": 49.00,
+    "description": "UPI/DR//Airtel R/UTIB/AIRTELPRED/Payme"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "credit",
+    "merchant": "PRAVEEN",
+    "category": "other",
+    "amount": 2000.00,
+    "description": "UPI/CR//PRAVEEN /INDB//Paid"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 17.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-14",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 24.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-13",
+    "type": "debit",
+    "merchant": "MASS ENT",
+    "category": "entertainment",
+    "amount": 2000.00,
+    "description": "UPI/DR//MASS ENT/YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-13",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 52.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-12",
+    "type": "debit",
+    "merchant": "WESTSIDE",
+    "category": "shopping",
+    "amount": 899.00,
+    "description": "UPI/DR//WESTSIDE/H DFC/westsideun/Payme"
+  },
+  {
+    "date": "2025-10-12",
+    "type": "debit",
+    "merchant": "Netflix",
+    "category": "entertainment",
+    "amount": 199.00,
+    "description": "UPI/DR//Netflix /ICIC/netflix.p/Upi M"
+  },
+  {
+    "date": "2025-10-12",
+    "type": "debit",
+    "merchant": "BHAGIRAT",
+    "category": "other",
+    "amount": 60.00,
+    "description": "UPI/DR//BHAGIRAT/Y ESB/paytmqr6cf/Payme"
+  },
+  {
+    "date": "2025-10-11",
+    "type": "debit",
+    "merchant": "MILANO I",
+    "category": "dining",
+    "amount": 440.00,
+    "description": "UPI/DR//MILANO I/HDFC/milanoicec/Payme"
+  },
+  {
+    "date": "2025-10-11",
+    "type": "debit",
+    "merchant": "GOPI RAJ",
+    "category": "other",
+    "amount": 30.00,
+    "description": "UPI/DR//GOPI RAJ/YESB/paytmqrmp/Payme"
+  },
+  {
+    "date": "2025-10-10",
+    "type": "debit",
+    "merchant": "MASS ENT",
+    "category": "entertainment",
+    "amount": 1100.00,
+    "description": "UPI/DR//MASS ENT/YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-10",
+    "type": "debit",
+    "merchant": "K V ROHIT",
+    "category": "other",
+    "amount": 1000.00,
+    "description": "UPI/DR//K V ROHIT/CNRB//Paym"
+  },
+  {
+    "date": "2025-10-09",
+    "type": "debit",
+    "merchant": "KOMMANAB",
+    "category": "other",
+    "amount": 5085.00,
+    "description": "UPI/DR//KOMMANAB/ KKBK/lakshman/Payme"
+  },
+  {
+    "date": "2025-10-09",
+    "type": "credit",
+    "merchant": "HARI NAR",
+    "category": "other",
+    "amount": 12000.00,
+    "description": "UPI/CR//HARI NAR/HDFC/groupbeaut/UPI"
+  },
+  {
+    "date": "2025-10-09",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 26.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-09",
+    "type": "debit",
+    "merchant": "VARUN RA",
+    "category": "other",
+    "amount": 800.00,
+    "description": "UPI/DR//VARUN RA/HDFC/varunhatto/Payme"
+  },
+  {
+    "date": "2025-10-08",
+    "type": "debit",
+    "merchant": "Zepto Ma",
+    "category": "groceries",
+    "amount": 273.99,
+    "description": "UPI/DR//Zepto Ma/HDFC/zeptonow-/Payme"
+  },
+  {
+    "date": "2025-10-08",
+    "type": "debit",
+    "merchant": "MILANO I",
+    "category": "dining",
+    "amount": 240.00,
+    "description": "UPI/DR//MILANO I/HDFC/milanoicec/Payme"
+  },
+  {
+    "date": "2025-10-07",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-07",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 32.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-06",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 31.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-06",
+    "type": "debit",
+    "merchant": "MASS ENT",
+    "category": "entertainment",
+    "amount": 1100.00,
+    "description": "UPI/DR//MASS ENT/YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-06",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 37.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-06",
+    "type": "credit",
+    "merchant": "VARUN DU",
+    "category": "other",
+    "amount": 37.00,
+    "description": "UPI/CR//VARUN DU/ICIC/varun.dunn/UPI"
+  },
+  {
+    "date": "2025-10-05",
+    "type": "debit",
+    "merchant": "Truffles",
+    "category": "dining",
+    "amount": 665.00,
+    "description": "UPI/DR//TRUFFLES/Y ESB/Q/Payme"
+  },
+  {
+    "date": "2025-10-05",
+    "type": "debit",
+    "merchant": "SHREE SU",
+    "category": "other",
+    "amount": 60.00,
+    "description": "UPI/DR//SHREE SU/UTIB/pinelabs./Gener"
+  },
+  {
+    "date": "2025-10-05",
+    "type": "debit",
+    "merchant": "RAMYASRI",
+    "category": "other",
+    "amount": 1000.00,
+    "description": "UPI/DR//RAMYASRI/S BIN//Payme"
+  },
+  {
+    "date": "2025-10-05",
+    "type": "debit",
+    "merchant": "RENUKA",
+    "category": "other",
+    "amount": 40.00,
+    "description": "UPI/DR//RENUKA/YES B/Q/Payment"
+  },
+  {
+    "date": "2025-10-05",
+    "type": "debit",
+    "merchant": "Mr. Kommanaboyena Durg",
+    "category": "other",
+    "amount": 25171.00,
+    "description": "TRANSFER TO Mr. Kommanaboyena Durg"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "debit",
+    "merchant": "AMAZON",
+    "category": "shopping",
+    "amount": 563.40,
+    "description": "OTHPG AMAZON Mumbai"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "credit",
+    "merchant": "Snapmint",
+    "category": "other",
+    "amount": 1.00,
+    "description": "IMPS//kmb-XX325 Cashfree/Snapmint"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "debit",
+    "merchant": "ABHAY KA",
+    "category": "other",
+    "amount": 170.00,
+    "description": "UPI/DR//ABHAY KA/HDFC//Payme"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "debit",
+    "merchant": "ABHAY KA",
+    "category": "other",
+    "amount": 703.00,
+    "description": "UPI/DR//ABHAY KA/HDFC//Payme"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "debit",
+    "merchant": "HENNES",
+    "category": "shopping",
+    "amount": 1399.00,
+    "description": "UPI/DR//HENNES N/HDFC/hennesnmau/Gener"
+  },
+  {
+    "date": "2025-10-04",
+    "type": "debit",
+    "merchant": "GOPI RAJ",
+    "category": "other",
+    "amount": 50.00,
+    "description": "UPI/DR//GOPI RAJ/YESB/Q/Payme"
+  },
+  {
+    "date": "2025-10-03",
+    "type": "debit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 500.00,
+    "description": "UPI/DR//SHREYA KV/SBIN//Pay"
+  },
+  {
+    "date": "2025-10-03",
+    "type": "debit",
+    "merchant": "ADVIT SI",
+    "category": "other",
+    "amount": 757.00,
+    "description": "UPI/DR//ADVIT SI/KKBK/advit.pawa/Payme"
+  },
+  {
+    "date": "2025-10-03",
+    "type": "debit",
+    "merchant": "ISMDPL",
+    "category": "other",
+    "amount": 120.00,
+    "description": "UPI/DR//ISMDPL 4/YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-03",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 31.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "credit",
+    "merchant": "NITHIN S",
+    "category": "other",
+    "amount": 275.00,
+    "description": "UPI/CR//NITHIN S/SBIN//Sent"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "ZOMATO",
+    "category": "dining",
+    "amount": 411.65,
+    "description": "UPI/DR//ZOMATO L/HDFC/zomatofd.p/UPIIn"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "ZEPTO MA",
+    "category": "groceries",
+    "amount": 283.58,
+    "description": "UPI/DR//ZEPTO MA/UTIB/zeptomarke/Payme"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 1000.00,
+    "description": "UPI/DR//SHREYA KV/SBIN//Pay"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "Anil Ku",
+    "category": "other",
+    "amount": 106.00,
+    "description": "UPI/DR//Anil Ku/SBIN//Payme"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "Simpl",
+    "category": "shopping",
+    "amount": 1695.82,
+    "description": "UPI/DR//Simpl/UTIB/si mpl@axb/Payment"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "Snapmint",
+    "category": "shopping",
+    "amount": 2128.00,
+    "description": "UPI/DR//Snapmint/UTI B/snapmint.p/UPIIn"
+  },
+  {
+    "date": "2025-10-02",
+    "type": "debit",
+    "merchant": "Zepto Ma",
+    "category": "groceries",
+    "amount": 133.99,
+    "description": "UPI/DR//Zepto Ma/HDFC/zeptonow-/Payme"
+  },
+  {
+    "date": "2025-09-30",
+    "type": "debit",
+    "merchant": "ZOMATO",
+    "category": "dining",
+    "amount": 206.90,
+    "description": "UPI/DR//ZOMATO/HDF C/payzomato@/Payment"
+  },
+  {
+    "date": "2025-09-30",
+    "type": "debit",
+    "merchant": "KOMMANAB",
+    "category": "other",
+    "amount": 10000.00,
+    "description": "UPI/DR//KOMMANAB/ KKBK/lakshman/Payme"
+  },
+  {
+    "date": "2025-09-30",
+    "type": "debit",
+    "merchant": "LEELA VI",
+    "category": "other",
+    "amount": 5000.00,
+    "description": "UPI/DR//LEELA VI/SBIN//Payme"
+  },
+  {
+    "date": "2025-09-30",
+    "type": "debit",
+    "merchant": "BRAHMAIA",
+    "category": "other",
+    "amount": 25000.00,
+    "description": "UPI/DR//BRAHMAIA/H DFC//Payme"
+  },
+  {
+    "date": "2025-09-30",
+    "type": "credit",
+    "merchant": "TMF SERVICES IND",
+    "category": "income",
+    "amount": 84385.00,
+    "description": "NEFT*HDFC*HDFCH *TMF SERVICES IND"
+  },
+  {
+    "date": "2025-09-29",
+    "type": "debit",
+    "merchant": "AMAZON",
+    "category": "shopping",
+    "amount": 8048.10,
+    "description": "OTHPG AMAZON Mumbai"
+  },
+  {
+    "date": "2025-09-29",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 37.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-29",
+    "type": "debit",
+    "merchant": "RAMYASRI",
+    "category": "other",
+    "amount": 2000.00,
+    "description": "UPI/DR//RAMYASRI/S BIN//Payme"
+  },
+  {
+    "date": "2025-09-28",
+    "type": "debit",
+    "merchant": "Mr PUNIT",
+    "category": "other",
+    "amount": 10.00,
+    "description": "UPI/DR//Mr PUNIT/YESB/Q/Payme"
+  },
+  {
+    "date": "2025-09-28",
+    "type": "debit",
+    "merchant": "Amazon I",
+    "category": "shopping",
+    "amount": 2400.00,
+    "description": "UPI/DR//Amazon I/YESB/amazon@yap/Payme"
+  },
+  {
+    "date": "2025-09-27",
+    "type": "debit",
+    "merchant": "KOMMANAB",
+    "category": "other",
+    "amount": 30000.00,
+    "description": "UPI/DR//KOMMANAB/ KKBK/lakshman/Payme"
+  },
+  {
+    "date": "2025-09-27",
+    "type": "debit",
+    "merchant": "Spotify",
+    "category": "entertainment",
+    "amount": 59.00,
+    "description": "UPI/DR//Spotify /ICIC/spotify.bd/Manda"
+  },
+  {
+    "date": "2025-09-26",
+    "type": "debit",
+    "merchant": "V R Daks",
+    "category": "other",
+    "amount": 110.00,
+    "description": "UPI/DR//V R Daks/YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-26",
+    "type": "debit",
+    "merchant": "REKHA M",
+    "category": "other",
+    "amount": 36.00,
+    "description": "UPI/DR//REKHA M/YESB/paytmqrcm/Paymen"
+  },
+  {
+    "date": "2025-09-26",
+    "type": "debit",
+    "merchant": "J H Serv",
+    "category": "other",
+    "amount": 1000.00,
+    "description": "UPI/DR//J H Serv/PPIW/ombk.AACK/Payme"
+  },
+  {
+    "date": "2025-09-25",
+    "type": "debit",
+    "merchant": "INSTANT",
+    "category": "other",
+    "amount": 19.20,
+    "description": "UPI/DR//INSTANT /YESB/BHARATPEO/Pay T"
+  },
+  {
+    "date": "2025-09-25",
+    "type": "credit",
+    "merchant": "CREDIT INTEREST",
+    "category": "income",
+    "amount": 253.00,
+    "description": "CREDIT INTEREST"
+  },
+  {
+    "date": "2025-09-25",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-23",
+    "type": "debit",
+    "merchant": "AMIS ENT",
+    "category": "entertainment",
+    "amount": 561.00,
+    "description": "UPI/DR//AMIS ENT/YESB/Q/Payme"
+  },
+  {
+    "date": "2025-09-22",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 58.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-22",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 20.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-22",
+    "type": "debit",
+    "merchant": "KARTHIK",
+    "category": "other",
+    "amount": 4439.00,
+    "description": "UPI/DR//KARTHIK /HDFC//Payme"
+  },
+  {
+    "date": "2025-09-19",
+    "type": "debit",
+    "merchant": "AOZORA",
+    "category": "other",
+    "amount": 1398.00,
+    "description": "UPI/DR//AOZORA/UTI B/aozora/Payment"
+  },
+  {
+    "date": "2025-09-19",
+    "type": "debit",
+    "merchant": "AOZORA",
+    "category": "other",
+    "amount": 1298.00,
+    "description": "UPI/DR//AOZORA/AIR P/aozora/AOZORA"
+  },
+  {
+    "date": "2025-09-18",
+    "type": "debit",
+    "merchant": "INSTANT",
+    "category": "other",
+    "amount": 80.00,
+    "description": "UPI/DR//INSTANT /YESB/BHARATPEO/Pay T"
+  },
+  {
+    "date": "2025-09-18",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-15",
+    "type": "credit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 400.00,
+    "description": "UPI/CR//SHREYA KV/SBIN//Pai"
+  },
+  {
+    "date": "2025-09-15",
+    "type": "debit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 6500.00,
+    "description": "UPI/DR//SHREYA KV/SBIN//Pay"
+  },
+  {
+    "date": "2025-09-15",
+    "type": "debit",
+    "merchant": "INSTANT",
+    "category": "other",
+    "amount": 40.00,
+    "description": "UPI/DR//INSTANT /YESB/BHARATPEO/Pay T"
+  },
+  {
+    "date": "2025-09-15",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.75,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-14",
+    "type": "debit",
+    "merchant": "PANCHAMI",
+    "category": "other",
+    "amount": 57.00,
+    "description": "UPI/DR//PANCHAMI/Y ESB/Q/Payme"
+  },
+  {
+    "date": "2025-09-14",
+    "type": "credit",
+    "merchant": "PRAVEEN",
+    "category": "other",
+    "amount": 10000.00,
+    "description": "UPI/CR//PRAVEEN /INDB//To si"
+  },
+  {
+    "date": "2025-09-12",
+    "type": "debit",
+    "merchant": "Netflix",
+    "category": "entertainment",
+    "amount": 199.00,
+    "description": "UPI/DR//Netflix /ICIC/netflix.p/Upi M"
+  },
+  {
+    "date": "2025-09-11",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-09",
+    "type": "debit",
+    "merchant": "DASARI",
+    "category": "other",
+    "amount": 2300.00,
+    "description": "UPI/DR//DASARI /SBIN/vaishnavid/Payme"
+  },
+  {
+    "date": "2025-09-09",
+    "type": "credit",
+    "merchant": "KARTHIK",
+    "category": "other",
+    "amount": 3500.00,
+    "description": "UPI/CR//KARTHIK /HDFC/karthikdes/UPI"
+  },
+  {
+    "date": "2025-09-09",
+    "type": "credit",
+    "merchant": "HARI NAR",
+    "category": "other",
+    "amount": 12000.00,
+    "description": "UPI/CR//HARI NAR/HDFC/groupbeaut/UPI"
+  },
+  {
+    "date": "2025-09-08",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 57.75,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-08",
+    "type": "credit",
+    "merchant": "PhonePe",
+    "category": "other",
+    "amount": 3500.00,
+    "description": "UPI/CR//PhonePe/YES B/phonepemer/R Ph"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "debit",
+    "merchant": "SHREYA KV",
+    "category": "other",
+    "amount": 17000.00,
+    "description": "UPI/DR//SHREYA KV/SBIN//Pay"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "debit",
+    "merchant": "McDonald",
+    "category": "dining",
+    "amount": 540.00,
+    "description": "UPI/DR//McDonald/YE SB/MCDONALDSI/Payme"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "debit",
+    "merchant": "Mercury",
+    "category": "other",
+    "amount": 200.00,
+    "description": "UPI/DR//Mercury /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "credit",
+    "merchant": "DASARI",
+    "category": "other",
+    "amount": 2300.00,
+    "description": "UPI/CR//DASARI /SBIN/vaishnavid/Payme"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "credit",
+    "merchant": "PRAVEEN",
+    "category": "other",
+    "amount": 17000.00,
+    "description": "UPI/CR//PRAVEEN /INDB//To Do"
+  },
+  {
+    "date": "2025-09-07",
+    "type": "debit",
+    "merchant": "SRI MANJ",
+    "category": "other",
+    "amount": 20.00,
+    "description": "UPI/DR//SRI MANJ/YESB/Q/Payme"
+  },
+  {
+    "date": "2025-09-06",
+    "type": "debit",
+    "merchant": "REDBUS",
+    "category": "transport",
+    "amount": 2289.00,
+    "description": "UPI/DR//REDBUS/YES B/REDBUSBUS/Payment"
+  },
+  {
+    "date": "2025-09-04",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 33.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-04",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 40.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-03",
+    "type": "debit",
+    "merchant": "Amazon I",
+    "category": "shopping",
+    "amount": 2522.00,
+    "description": "UPI/DR//Amazon I/RATN/amazon@rap/Payme"
+  },
+  {
+    "date": "2025-09-03",
+    "type": "debit",
+    "merchant": "KARTHIK",
+    "category": "other",
+    "amount": 1000.00,
+    "description": "UPI/DR//KARTHIK /HDFC//Payme"
+  },
+  {
+    "date": "2025-09-02",
+    "type": "debit",
+    "merchant": "INSTANT",
+    "category": "other",
+    "amount": 85.00,
+    "description": "UPI/DR//INSTANT /YESB/BHARATPEO/Pay T"
+  },
+  {
+    "date": "2025-09-02",
+    "type": "credit",
+    "merchant": "BRAHMAIA",
+    "category": "other",
+    "amount": 2500.00,
+    "description": "UPI/CR//BRAHMAIA/H DFC//Payme"
+  },
+  {
+    "date": "2025-09-01",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 17.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-09-01",
+    "type": "debit",
+    "merchant": "Compass",
+    "category": "other",
+    "amount": 85.00,
+    "description": "UPI/DR//Compass /YESB/paytm-/Payme"
+  },
+  {
+    "date": "2025-08-30",
+    "type": "debit",
+    "merchant": "KOMMANAB",
+    "category": "other",
+    "amount": 48000.00,
+    "description": "UPI/DR//KOMMANAB/ KKBK/lakshman/Payme"
+  },
+  {
+    "date": "2025-08-30",
+    "type": "debit",
+    "merchant": "RAMYASRI",
+    "category": "other",
+    "amount": 2000.00,
+    "description": "UPI/DR//RAMYASRI/S BIN//Payme"
+  },
+  {
+    "date": "2025-08-30",
+    "type": "debit",
+    "merchant": "LEELA VI",
+    "category": "other",
+    "amount": 5000.00,
+    "description": "UPI/DR//LEELA VI/SBIN//Payme"
+  },
+  {
+    "date": "2025-08-30",
+    "type": "debit",
+    "merchant": "SNAPMINT",
+    "category": "shopping",
+    "amount": 2128.00,
+    "description": "UPI/DR//SNAPMINT/IN DB/snapmint.p/UPIIn"
+  },
+  {
+    "date": "2025-08-30",
+    "type": "debit",
+    "merchant": "Simpl",
+    "category": "shopping",
+    "amount": 2256.48,
+    "description": "UPI/DR//Simpl/UTIB/si mpl.cf@a/Payment"
+  }
+]
