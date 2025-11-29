@@ -48,6 +48,22 @@ export interface AccountData {
   balance: number;
 }
 
+export interface AlertData {
+  id: string;
+  type: string;
+  alert_type: string;
+  risk_level: string;
+  message: string;
+  email_content?: string;
+  email_sent: boolean;
+  is_resolved: boolean;
+  created_at: any;
+  updated_at: any;
+  transaction_id?: string;
+  goal_id?: string;
+  anomaly_id?: string;
+}
+
 // Generic API call function
 async function apiCall<T = any>(
   endpoint: string,
@@ -261,6 +277,30 @@ export const remindersApi = {
   },
 };
 
+// Alerts APIs
+export const alertsApi = {
+  // Get user alerts
+  getAlerts: async (userId: string): Promise<ApiResponse<AlertData[]>> => {
+    return apiCall(`/users/${userId}/alerts`, {
+      method: 'GET',
+    });
+  },
+
+  // Mark alert as resolved
+  resolveAlert: async (userId: string, alertId: string): Promise<ApiResponse<any>> => {
+    return apiCall(`/users/${userId}/alerts/${alertId}/resolve`, {
+      method: 'PUT',
+    });
+  },
+
+  // Delete alert
+  deleteAlert: async (userId: string, alertId: string): Promise<ApiResponse<any>> => {
+    return apiCall(`/users/${userId}/alerts/${alertId}`, {
+      method: 'DELETE',
+    });
+  },
+};
+
 // Analytics APIs
 export const analyticsApi = {
   // Get financial summary
@@ -330,6 +370,7 @@ export default {
   goals: goalsApi,
   aiCoach: aiCoachApi,
   reminders: remindersApi,
+  alerts: alertsApi,
   analytics: analyticsApi,
   utils: apiUtils,
 };
