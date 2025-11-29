@@ -1,0 +1,91 @@
+anomaly_detection_task:
+  description: >
+    Detect anomalies in this transaction by analyzing both the transaction's intrinsic properties and patterns in the user's transaction history.
+
+    **Transaction Details:**
+    - Transaction ID: {transaction_id}
+    - User ID: {user_id}
+    - Amount: ₹{amount}
+    - Type: {type}
+    - Description/Narration: {description}
+    - Date: {date}
+
+    **Your Task (Anomaly Detection):**
+    1. **First, analyze the current transaction's properties for suspicious patterns:**
+       - Unusual amounts (extremely high/low values, round numbers like ₹50000, ₹100000)
+       - Suspicious timing (late night transactions 11 PM - 5 AM, unusual hours)
+       - Suspicious dates (holidays, weekends when user normally doesn't transact)
+       - Suspicious descriptions (generic terms, unusual merchants, unclear narration)
+       - Transaction type anomalies (unusual debit/credit patterns)
+
+    2. **Then, optionally use the detect_past_transactions tool to fetch the user's past 10 transactions**
+       (date, amount, category, merchant, AI insights) for additional context.
+       This is OPTIONAL - use it only if it provides meaningful comparison data.
+
+    3. **Comprehensive Anomaly Analysis:**
+       - **Amount-based anomalies:** Transactions that are unusually large/small
+       - **Time-based anomalies:** Transactions at unusual times or frequencies
+       - **Merchant-based anomalies:** Unknown or suspicious merchants
+       - **Pattern-based anomalies:** Deviations from normal user behavior
+       - **Fraud indicators:** Round amounts, urgent transfers, unusual recipients
+
+    4. **Risk Assessment:** Determine risk level as **low**, **medium**, or **high**
+       based on the severity and combination of suspicious factors.
+
+    5. **Draft Email Content:** If an anomaly is detected, create a professional email body in Markdown format.
+       The email should ONLY contain the body content (no subject line) and must use Markdown formatting for better readability.
+       Include:
+       - Brief greeting
+       - Clear explanation of the suspicious transaction using Markdown headers (##, ###)
+       - Transaction details in a structured format (use Markdown lists or tables)
+       - **Risk level** highlighted in bold
+       - Reason for flagging
+       - Recommended actions for the user (numbered list)
+       - Closing with contact information or support details
+       
+       Example structure:
+       ```
+       Hello,
+       
+       ## 🚨 Suspicious Transaction Detected
+       
+       We've detected unusual activity on your account that requires your attention.
+       
+       ### Transaction Details
+       - **Amount**: ₹XX,XXX
+       - **Merchant**: Merchant Name
+       - **Date**: YYYY-MM-DD
+       - **Type**: Credit/Debit
+       
+       ### Risk Assessment
+       **Risk Level**: High/Medium/Low
+       
+       **Reason**: Brief explanation...
+       
+       ### Recommended Actions
+       1. Review this transaction immediately
+       2. Contact us if you did not authorize this
+       3. Consider changing your password
+       
+       Stay safe,
+       FinPath Security Team
+       ```
+
+    6. If an anomaly is detected (`is_anomalous: true`):
+       - Use the `add_anomaly` tool to store anomaly details in the 'anomalies' collection
+         and create an alert in the 'alerts' collection.
+
+    6. **Important:** You can detect anomalies based on the current transaction alone.
+       Lack of historical data does NOT mean no anomalies exist.
+
+  expected_output: >
+    A structured anomaly analysis matching the AnomalyDetectionResult model. Return ONLY a valid JSON object with no additional text, formatting, or code blocks:
+
+    {
+      "is_anomalous": false,
+      "reason": "string",
+      "risk_level": "low",
+      "email_content": "string",
+      "email_sent": false
+    }
+  agent: anomaly_detection_agent
