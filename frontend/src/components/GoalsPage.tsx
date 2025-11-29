@@ -55,7 +55,6 @@ export function GoalsPage() {
   const [proposedAllocations, setProposedAllocations] = useState<Record<string, number>>({})
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
-  const [pollingGoalIds, setPollingGoalIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     const run = async () => {
@@ -69,33 +68,6 @@ export function GoalsPage() {
     }
     run()
   }, [user?.uid])
-
-  // Poll for AI processing updates
-  useEffect(() => {
-    if (pollingGoalIds.size === 0 || !user?.uid) return
-
-    const interval = setInterval(async () => {
-      const response = await goalsApi.getGoals(user.uid)
-      if (response.success && response.data) {
-        setGoals(response.data)
-        
-        // Check if any goals finished processing
-        const stillProcessing = new Set<string>()
-        response.data.forEach((goal: Goal) => {
-          if (goal.ai_processing && pollingGoalIds.has(goal.id)) {
-            stillProcessing.add(goal.id)
-          }
-        })
-        
-        // Stop polling for goals that finished processing
-        if (stillProcessing.size !== pollingGoalIds.size) {
-          setPollingGoalIds(stillProcessing)
-        }
-      }
-    }, 3000) // Poll every 3 seconds
-
-    return () => clearInterval(interval)
-  }, [pollingGoalIds, user?.uid])
 
   const fetchGoals = async () => {
     if (!user?.uid) return
@@ -129,41 +101,11 @@ export function GoalsPage() {
       })(),
     }
 
-    // Close modal immediately
-    setIsDialogOpen(false)
-    setNewGoal({ title: '', emoji: '🎯', target_amount: '', category: '', deadline: '', description: '', duration_months: '', priority: 'medium' })
-
-    // Create optimistic goal with AI processing state
-    const tempId = `temp_${Date.now()}`
-    const optimisticGoal: Goal = {
-      id: tempId,
-      ...goalData,
-      ai_processing: true,
-      created_at: new Date().toISOString(),
-    }
-    
-    // Add optimistic goal to UI
-    setGoals(prev => [optimisticGoal, ...prev])
-
-    // Create goal on backend
     const response = await goalsApi.createGoal(user.uid, goalData)
     if (response.success) {
-      // Fetch updated goals
-      const updatedResponse = await goalsApi.getGoals(user.uid)
-      if (updatedResponse.success && updatedResponse.data) {
-        setGoals(updatedResponse.data)
-        
-        // Find the newly created goal and start polling if it's processing
-        const newGoalItem = updatedResponse.data.find((g: Goal) => 
-          g.title === goalData.title && g.target_amount === goalData.target_amount
-        )
-        if (newGoalItem?.ai_processing) {
-          setPollingGoalIds(prev => new Set(prev).add(newGoalItem.id))
-        }
-      }
-    } else {
-      // Remove optimistic goal if creation failed
-      setGoals(prev => prev.filter(g => g.id !== tempId))
+      await goalsApi.getGoals(user.uid).then(r => { if (r.success && r.data) setGoals(r.data) })
+      setNewGoal({ title: '', emoji: '🎯', target_amount: '', category: '', deadline: '', description: '', duration_months: '', priority: 'medium' })
+      setIsDialogOpen(false)
     }
   }
 
@@ -191,29 +133,12 @@ export function GoalsPage() {
       })(),
     }
 
-    const goalId = editingGoal.id
-
-    // Close modal immediately
-    setIsDialogOpen(false)
-    setNewGoal({ title: '', emoji: '🎯', target_amount: '', category: '', deadline: '', description: '', duration_months: '', priority: 'medium' })
-    setEditingGoal(null)
-
-    // Update goal with AI processing state
-    setGoals(prev => prev.map(g => g.id === goalId ? { ...g, ai_processing: true } : g))
-
-    const response = await goalsApi.updateGoal(user.uid, goalId, goalData)
+    const response = await goalsApi.updateGoal(user.uid, editingGoal.id, goalData)
     if (response.success) {
-      // Fetch updated goals
-      const updatedResponse = await goalsApi.getGoals(user.uid)
-      if (updatedResponse.success && updatedResponse.data) {
-        setGoals(updatedResponse.data)
-        
-        // Start polling for this goal
-        const updatedGoal = updatedResponse.data.find((g: Goal) => g.id === goalId)
-        if (updatedGoal?.ai_processing) {
-          setPollingGoalIds(prev => new Set(prev).add(goalId))
-        }
-      }
+      await goalsApi.getGoals(user.uid).then(r => { if (r.success && r.data) setGoals(r.data) })
+      setNewGoal({ title: '', emoji: '🎯', target_amount: '', category: '', deadline: '', description: '', duration_months: '', priority: 'medium' })
+      setIsDialogOpen(false)
+      setEditingGoal(null)
     }
   }
 
@@ -235,24 +160,14 @@ export function GoalsPage() {
   const handleConfirmPayment = async () => {
     if (!user?.uid || !confirmGoalId || !confirmDueDate || !confirmAmount) return
 
-    const goalId = confirmGoalId
-
-    // Close modal immediately
-    setIsConfirmOpen(false)
-    setConfirmGoalId('')
-    setConfirmDueDate('')
-    setConfirmAmount('')
-
-    // Update goal with AI processing state
-    setGoals(prev => prev.map(g => g.id === goalId ? { ...g, ai_processing: true } : g))
-
-    const response = await goalsApi.confirmPayment(user.uid, goalId, confirmDueDate, parseFloat(confirmAmount))
+    const response = await goalsApi.confirmPayment(user.uid, confirmGoalId, confirmDueDate, parseFloat(confirmAmount))
 
     if (response.success) {
+      setIsConfirmOpen(false)
+      setConfirmGoalId('')
+      setConfirmDueDate('')
+      setConfirmAmount('')
       await fetchGoals()
-      
-      // Start polling for this goal
-      setPollingGoalIds(prev => new Set(prev).add(goalId))
     }
   }
 

@@ -14,6 +14,72 @@ interface Message {
   content: string
   timestamp: Date
   hasChart?: boolean
+  coachResponse?: CoachResponse
+}
+
+interface GoalStatusDetails {
+  status?: string
+  risk_level?: string
+  progress_percentage?: number
+  amount_saved?: number
+  amount_remaining?: number
+  months_remaining?: number
+  required_monthly_contribution?: number
+  estimated_current_monthly?: number
+  shortfall?: number
+  deadline?: string | null
+}
+
+interface GoalDetail {
+  title?: string
+  target_amount?: number
+  current_amount?: number
+  priority?: string
+  goal_id?: string
+  status_details?: GoalStatusDetails
+}
+
+interface GoalsInsights {
+  summary?: string
+  total_goals?: number
+  on_track_count?: number
+  at_risk_count?: number
+  overall_progress?: number
+  goal_details?: GoalDetail[]
+}
+
+interface MerchantInfo {
+  merchant: string
+  amount: number
+  count: number
+}
+
+interface SpendingInsights {
+  summary?: string
+  total_spending?: number
+  transaction_count?: number
+  top_category?: string
+  top_merchant?: string
+  key_findings?: string[]
+  by_category?: Record<string, number>
+  by_merchant?: MerchantInfo[]
+}
+
+interface DetailedInsights {
+  goals_insights?: GoalsInsights
+  spending_insights?: SpendingInsights
+}
+
+interface CoachResponse {
+  response_type?: string
+  user_query?: string
+  direct_answer?: string
+  detailed_insights?: DetailedInsights
+  visualizations?: unknown[]
+  recommendations?: unknown[]
+  encouragement?: string
+  confidence_score?: number
+  tone?: string
 }
 
 const quickActions = ['Show Spending Summary', 'View Goals', 'Budget Recommendations', 'Analyze Last Month']
@@ -49,26 +115,56 @@ export function AICoachPage() {
     setIsTyping(true)
     try {
       const uid = user?.uid
-      if (!uid) throw new Error('Please log in')
+      if (!uid) {
+        throw new Error('Please log in to use the AI coach.')
+      }
       const res = await aiCoachApi.askQuestion(uid, userMessage.content)
-      const answerText = res.success && res.data && (res.data.answer || typeof res.data === 'string') ? (res.data.answer || String(res.data)) : 'Unable to generate a response'
+      const coachResponse =
+        res.success && typeof res.data === 'object' && res.data !== null && 'coach_response' in res.data
+          ? (res.data as { coach_response?: CoachResponse }).coach_response
+          : undefined
+      const hasVisualizations =
+        coachResponse &&
+        Array.isArray(coachResponse.visualizations) &&
+        coachResponse.visualizations.length > 0
+
+      const primary =
+        res.success && res.data && (typeof res.data === 'string' || (res.data as { answer?: string }).answer)
+          ? (typeof res.data === 'string' ? res.data : (res.data as { answer?: string }).answer || '')
+          : ''
+      const fallbackSummary = coachResponse && (coachResponse as { summary?: string }).summary
+      const answerText = (primary && primary.trim().length > 0)
+        ? primary
+        : (fallbackSummary && fallbackSummary.trim().length > 0)
+          ? fallbackSummary
+          : 'Unable to generate a response'
       const aiMessage: Message = {
         id: nextId(),
         type: 'ai',
         content: answerText,
         timestamp: new Date(),
-        hasChart: /spending|summary|breakdown/i.test(userMessage.content)
+        hasChart: hasVisualizations || /spending|summary|breakdown/i.test(userMessage.content),
+        coachResponse,
       }
       setMessages((prev) => [...prev, aiMessage])
-    } catch {
-      const aiMessage: Message = { id: nextId(), type: 'ai', content: 'Something went wrong. Try again.', timestamp: new Date() }
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : ''
+      const fallback =
+        msg && /log in/i.test(msg)
+          ? msg
+          : 'Something went wrong while talking to your AI coach. Please try again.'
+      const aiMessage: Message = {
+        id: nextId(),
+        type: 'ai',
+        content: fallback,
+        timestamp: new Date(),
+      }
       setMessages((prev) => [...prev, aiMessage])
     } finally {
       setIsTyping(false)
     }
   }
 
-  const generateAIResponse = (_query: string) => ''
 
   const handleQuickAction = (action: string) => {
     setInput(action)
@@ -95,32 +191,92 @@ export function AICoachPage() {
               <motion.div key={message.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.type === 'user' ? 'bg-[#4F46E5] text-white' : 'bg-gray-100 text-[#1F2937]'}`}>
                   <div className="whitespace-pre-wrap text-sm">{message.content}</div>
-                  {message.hasChart && (
+                  {message.type === 'ai' && message.coachResponse && message.coachResponse.detailed_insights && message.coachResponse.detailed_insights.goals_insights && (
+                    <div className="mt-3 p-3 bg-white rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-600">Goals Overview</span>
+                        <TrendingUp className="h-4 w-4 text-[#10B981]" />
+                      </div>
+                      {(() => {
+                        const gi = message.coachResponse!.detailed_insights!.goals_insights as GoalsInsights
+                        const total = gi.total_goals || 0
+                        const onTrack = gi.on_track_count || 0
+                        const atRisk = gi.at_risk_count || 0
+                        const progress = gi.overall_progress || 0
+                        const details = gi.goal_details || []
+                        return (
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-2 text-xs text-gray-700">
+                              <div className="bg-gray-50 p-2 rounded">Total Goals: {total}</div>
+                              <div className="bg-gray-50 p-2 rounded">Overall Progress: {progress}%</div>
+                              <div className="bg-gray-50 p-2 rounded">On Track: {onTrack}</div>
+                              <div className="bg-gray-50 p-2 rounded">At Risk/Overdue: {atRisk}</div>
+                            </div>
+                            {details.slice(0, 3).map((g, idx) => (
+                              <div key={g.goal_id || String(idx)} className="border border-gray-200 rounded p-2">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium text-[#1F2937]">{g.title || 'Goal'}</span>
+                                  <span className="text-xs text-gray-500">{g.priority || 'medium'}</span>
+                                </div>
+                                <div className="mt-1 text-xs text-gray-600">
+                                  <div>Target: ₹{(g.target_amount || 0).toLocaleString()}</div>
+                                  <div>Saved: ₹{(g.current_amount || 0).toLocaleString()}</div>
+                                  <div>
+                                    Status: {g.status_details?.status || 'unknown'} · Progress: {g.status_details?.progress_percentage || 0}%
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      })()}
+                    </div>
+                  )}
+                  {message.type === 'ai' && message.coachResponse && message.coachResponse.detailed_insights && message.coachResponse.detailed_insights.spending_insights && (
                     <div className="mt-3 p-3 bg-white rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs text-gray-600">Category Breakdown</span>
                         <TrendingUp className="h-4 w-4 text-[#10B981]" />
                       </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-[#4F46E5] rounded-full" style={{ width: '31%' }} />
+                      {(() => {
+                        const si = message.coachResponse!.detailed_insights!.spending_insights as SpendingInsights
+                        const byCategory = si.by_category || {}
+                        const totalSpending = si.total_spending || 0
+                        const categories = Object.entries(byCategory).sort((a, b) => b[1] - a[1]).slice(0, 5)
+                        const colors = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+
+                        if (categories.length === 0) {
+                          return <div className="text-xs text-gray-500">No category data available</div>
+                        }
+
+                        return (
+                          <div className="space-y-2">
+                            {categories.map(([category, amount], idx) => {
+                              const percentage = totalSpending > 0 ? (amount / totalSpending * 100).toFixed(1) : '0.0'
+                              return (
+                                <div key={category} className="space-y-1">
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-xs text-gray-700 capitalize">{category}</span>
+                                    <span className="text-xs text-gray-600">₹{amount.toLocaleString()}</span>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                      <div
+                                        className="h-full rounded-full transition-all"
+                                        style={{
+                                          width: `${percentage}%`,
+                                          backgroundColor: colors[idx % colors.length]
+                                        }}
+                                      />
+                                    </div>
+                                    <span className="text-xs text-gray-600 w-12">{percentage}%</span>
+                                  </div>
+                                </div>
+                              )
+                            })}
                           </div>
-                          <span className="text-xs text-gray-600 w-12">31%</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-[#10B981] rounded-full" style={{ width: '29%' }} />
-                          </div>
-                          <span className="text-xs text-gray-600 w-12">29%</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div className="h-full bg-[#F59E0B] rounded-full" style={{ width: '23%' }} />
-                          </div>
-                          <span className="text-xs text-gray-600 w-12">23%</span>
-                        </div>
-                      </div>
+                        )
+                      })()}
                     </div>
                   )}
                 </div>
