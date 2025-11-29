@@ -13,6 +13,11 @@ try:
 except Exception:
     get_memory_client = None
 
+try:
+    from .mutual_funds_knowledge import get_mutual_fund_recommendations
+except Exception:
+    get_mutual_fund_recommendations = None
+
 load_dotenv()
 from openai import OpenAI
 
@@ -175,6 +180,7 @@ def _analyst_router(state: CoachState) -> CoachState:
     spending = any(x in q for x in ["spending", "spent", "transactions", "food", "merchant", "shopping", "groceries", "upi", "analyze", "budget", "expense"])
     goals = any(x in q for x in ["goal", "goals", "progress", "save", "savings", "deadline", "laptop", "vacation", "car", "house"])
     anomalies = any(x in q for x in ["anomaly", "fraud", "alert", "unusual"])
+    investments = any(x in q for x in ["mutual fund", "mf", "invest", "sip", "lumpsum", "portfolio", "stock", "equity", "debt", "elss", "recommend fund"])
     comprehensive = any(x in q for x in ["summary", "financial health", "overall", "spending and goals"]) or (spending and goals)
     
     # Auto-detect time ranges
@@ -197,9 +203,11 @@ def _analyst_router(state: CoachState) -> CoachState:
         filters['date_range'] = {'start': today_start.isoformat(), 'end': now.isoformat()}
     
     state['filters'] = filters
-    
+
     if comprehensive:
         state['route'] = 'comprehensive'
+    elif investments:
+        state['route'] = 'investments'
     elif anomalies:
         state['route'] = 'anomalies'
     elif goals:
@@ -209,6 +217,142 @@ def _analyst_router(state: CoachState) -> CoachState:
     else:
         state['route'] = 'spending'
     return state
+
+def _fetch_mutual_fund_recommendations(state: CoachState) -> CoachState:
+    """Fetch mutual fund recommendations based on user query and profile using AI to understand intent"""
+    try:
+        if not get_mutual_fund_recommendations:
+            state.setdefault('errors', []).append("Mutual fund module not available")
+            return state
+
+        user_id = state.get('user_id')
+        user_query = state.get('user_query', '')
+
+        # Use AI to extract investment parameters from the user's query
+        extraction_prompt = {
+            "role": "system",
+            "content": """You are a financial advisor assistant. Extract investment parameters from user queries.
+
+Available fund categories in the database:
+- nifty_50_index (Nifty 50 Index Funds)
+- nifty_100_index (Nifty 100 Index Funds)
+- large_cap_active (Large Cap Active Funds)
+- flexi_cap (Flexi Cap Funds)
+- mid_cap (Mid Cap Funds)
+- small_cap (Small Cap Funds)
+- it_technology (IT/Technology Sector Funds)
+- defence (Defence Sector Funds)
+- real_estate (Real Estate/Realty Funds)
+- gold (Gold Funds)
+- silver (Silver Funds)
+- elss_tax_saver (ELSS Tax Saver Funds)
+- momentum (Momentum/Factor Funds)
+
+Respond with ONLY a JSON object with these fields:
+{
+  "risk_tolerance": "low" | "moderate" | "high" | "very_high",
+  "investment_horizon": "short" | "medium" | "long",
+  "investment_amount": number (in rupees),
+  "preferred_categories": ["category_id1", "category_id2"] or null,
+  "preferred_sectors": ["sector1", "sector2"] or null,
+  "category_preference": "equity" | "debt" | "hybrid" | "commodity" | null
+}
+
+Examples:
+User: "I want to invest in nifty and small cap funds"
+Response: {"risk_tolerance": "moderate", "investment_horizon": "medium", "investment_amount": 10000, "preferred_categories": ["nifty_50_index", "small_cap"], "preferred_sectors": null, "category_preference": "equity"}
+
+User: "Suggest low risk gold funds"
+Response: {"risk_tolerance": "low", "investment_horizon": "medium", "investment_amount": 10000, "preferred_categories": ["gold"], "preferred_sectors": null, "category_preference": "commodity"}
+
+User: "Technology sector funds for long term aggressive growth"
+Response: {"risk_tolerance": "high", "investment_horizon": "long", "investment_amount": 10000, "preferred_categories": ["it_technology"], "preferred_sectors": ["technology", "it"], "category_preference": "equity"}"""
+        }
+
+        user_msg = {"role": "user", "content": f"Extract parameters from: {user_query}"}
+
+        try:
+            ai_response = _call_openai_chat([extraction_prompt, user_msg], temperature=0.0, max_tokens=200)
+            import json
+            extracted = json.loads(ai_response)
+
+            risk_profile = extracted.get('risk_tolerance', 'moderate')
+            horizon = extracted.get('investment_horizon', 'medium')
+            investment_amount = extracted.get('investment_amount', 10000.0)
+            preferred_categories = extracted.get('preferred_categories')
+            sectors = extracted.get('preferred_sectors')
+            category = extracted.get('category_preference')
+
+        except Exception as e:
+            logger.warning(f"AI extraction failed, using defaults: {e}")
+            risk_profile = 'moderate'
+            horizon = 'medium'
+            investment_amount = 10000.0
+            preferred_categories = None
+            sectors = None
+            category = None
+
+        user_profile = {
+            'risk_tolerance': risk_profile,
+            'investment_horizon': horizon,
+            'investment_amount': investment_amount,
+            'preferred_sectors': sectors,
+            'category_preference': category,
+            'specific_categories': preferred_categories
+        }
+
+        result = get_mutual_fund_recommendations(
+            user_id=user_id,
+            user_profile=user_profile,
+            query=state.get('user_query')
+        )
+
+        if result.get('success'):
+            state.setdefault('analyst_output', {})['mutual_fund_recommendations'] = {
+                'recommendations': result.get('recommendations', []),
+                'criteria': result.get('criteria', {}),
+                'total_found': result.get('total_found', 0)
+            }
+        else:
+            state.setdefault('errors', []).append(result.get('error', 'Failed to get recommendations'))
+
+    except Exception as e:
+        logger.error(f"Error in _fetch_mutual_fund_recommendations: {e}")
+        state.setdefault('errors', []).append(str(e))
+
+    return state
+def _categorize_transaction(transaction: dict) -> str:
+    """Intelligently categorize a transaction based on merchant/description."""
+    merchant = (transaction.get('merchant') or transaction.get('description') or '').upper()
+    category = transaction.get('category', 'other').lower()
+
+    # If already categorized (not 'other'), keep it
+    if category and category != 'other':
+        return category
+
+    # Categorize based on merchant patterns
+    if any(x in merchant for x in ['ATM/', 'CASH', 'WITHDRAWAL']):
+        return 'cash_withdrawal'
+    elif any(x in merchant for x in ['FT/', 'FUND TRANSFER', 'NEFT', 'IMPS', 'RTGS']):
+        return 'transfers'
+    elif any(x in merchant for x in ['UPI/', 'PAYTM', 'PHONEPE', 'GPAY', 'GOOGLEPAY']):
+        return 'upi_payments'
+    elif any(x in merchant for x in ['GROCERY', 'SUPERMARKET', 'MART', 'STORE', 'BIGBASKET', 'DMART']):
+        return 'groceries'
+    elif any(x in merchant for x in ['RESTAURANT', 'CAFE', 'ZOMATO', 'SWIGGY', 'FOOD', 'DINING']):
+        return 'food_dining'
+    elif any(x in merchant for x in ['UBER', 'OLA', 'RAPIDO', 'PETROL', 'FUEL', 'TRANSPORT']):
+        return 'transportation'
+    elif any(x in merchant for x in ['AMAZON', 'FLIPKART', 'MYNTRA', 'SHOPPING', 'MALL']):
+        return 'shopping'
+    elif any(x in merchant for x in ['NETFLIX', 'SPOTIFY', 'PRIME', 'ENTERTAINMENT', 'MOVIE', 'CINEMA']):
+        return 'entertainment'
+    elif any(x in merchant for x in ['ELECTRIC', 'WATER', 'GAS', 'BILL', 'UTILITY']):
+        return 'utilities'
+    elif any(x in merchant for x in ['MEDICAL', 'HOSPITAL', 'PHARMACY', 'DOCTOR', 'HEALTH']):
+        return 'healthcare'
+    else:
+        return 'other'
 
 def _fetch_transactions(state: CoachState) -> CoachState:
     try:
@@ -267,7 +411,8 @@ def _fetch_transactions(state: CoachState) -> CoachState:
         by_category: Dict[str, float] = {}
         by_merchant: Dict[str, Dict[str, float]] = {}
         for t in transactions:
-            c = t.get('category', 'Uncategorized')
+            # Use intelligent categorization
+            c = _categorize_transaction(t)
             amt = float(t.get('amount', 0) or 0)
             by_category[c] = by_category.get(c, 0) + amt
             # Prefer `refined_merchant` if available, else fall back to `merchant` or description
@@ -522,9 +667,21 @@ def _synthesize_response(state: CoachState) -> CoachState:
     if ao.get('spending_goals_connection'):
         sgc = ao['spending_goals_connection']
         context_parts.append(f"**Savings Capacity:**\n- Available for goals: ₹{sgc.get('savings_capacity', 0)}")
-    
+
+    if ao.get('mutual_fund_recommendations'):
+        mfr = ao['mutual_fund_recommendations']
+        recs = mfr.get('recommendations', [])
+        if recs:
+            top_3 = recs[:3]
+            fund_details = []
+            for i, r in enumerate(top_3):
+                returns = r.get('returns', {})
+                ret_str = f"{returns.get('3y', returns.get('1y', 'N/A'))}%"
+                fund_details.append(f"{i+1}. {r.get('fund_name')} - {r.get('category')} ({ret_str} returns)")
+            context_parts.append(f"**Mutual Fund Recommendations (Top {len(top_3)}):**\n" + "\n".join(fund_details))
+
     context_text = "\n\n".join(context_parts) if context_parts else "No financial data available yet. Start tracking transactions to get insights."
-    
+
     # Build prompt for the AI agent
     if intent == 'A':
         # For greetings, just return a friendly response
@@ -541,10 +698,16 @@ def _synthesize_response(state: CoachState) -> CoachState:
         }
         state['coach_response'] = response
         return state
-    
-    # For financial coaching, use AI to generate response
-    system = {"role": "system", "content": "You are a friendly financial coaching assistant. Generate a helpful, actionable response based on the user's question and their financial data. Be specific and encouraging. Keep it concise (2-4 sentences max)."}
-    user_content = f"User asked: '{user_q}'\n\nTheir financial data:\n{context_text}\n\nProvide a helpful coaching response:"
+
+    # For mutual fund queries, use specialized prompt with disclaimers
+    if ao.get('mutual_fund_recommendations'):
+        system = {"role": "system", "content": "You are a helpful financial advisor. Provide investment advice with proper disclaimers. Start with financial guidance based on user's query, then suggest 2-3 funds. Always include: 1) Risk disclaimer, 2) Advice to assess goals/risk tolerance, 3) Recommendation to consult financial advisor, 4) Statement that mutual funds are subject to market risks and this is advice not a decision."}
+        user_content = f"User asked: '{user_q}'\n\nRecommended funds:\n{context_text}\n\nProvide financial advice with disclaimers:"
+    else:
+        # For other financial coaching, use standard prompt
+        system = {"role": "system", "content": "You are a friendly financial coaching assistant. Generate a helpful, actionable response based on the user's question and their financial data. Be specific and encouraging. Keep it concise (2-4 sentences max)."}
+        user_content = f"User asked: '{user_q}'\n\nTheir financial data:\n{context_text}\n\nProvide a helpful coaching response:"
+
     user = {"role": "user", "content": user_content}
     
     try:
@@ -560,7 +723,7 @@ def _synthesize_response(state: CoachState) -> CoachState:
         "response_type": "financial_coaching",
         "user_query": user_q,
         "direct_answer": direct_answer,
-        "detailed_insights": {k: v for k, v in ao.items() if k in ["spending_insights", "goals_insights", "cashflow_projection", "anomalies", "spending_goals_connection"]},
+        "detailed_insights": {k: v for k, v in ao.items() if k in ["spending_insights", "goals_insights", "cashflow_projection", "anomalies", "spending_goals_connection", "mutual_fund_recommendations"]},
         "visualizations": ao.get('charts', []),
         "recommendations": ao.get('recommendations', []),
         "encouragement": "Keep tracking your spending to improve your financial health!",
@@ -609,6 +772,8 @@ def build_coach_pipeline():
             state = _fetch_goals(state)
         elif route == 'anomalies':
             state = _fetch_anomalies(state)
+        elif route == 'investments':
+            state = _fetch_mutual_fund_recommendations(state)
         else:  # comprehensive
             state = _run_comprehensive(state)
             state = _connect_spending_goals(state)
