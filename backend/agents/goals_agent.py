@@ -50,9 +50,10 @@ def get_current_api_key():
     return API_KEYS[current_api_key_index]
 
 # Initialize Google Gemini using CrewAI's LLM with current API key
-# Initialize LLM
 llm = LLM(
-    model="openai/gpt-5-nano"
+    model="gemini/gemini-2.5-flash-lite",
+    temperature=0.1,
+    api_key=get_current_api_key()
 )
 
 

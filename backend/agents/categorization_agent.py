@@ -151,10 +151,12 @@ def _is_valid_categorization_payload(data: Dict[str, Any]) -> bool:
         return False
     return all(field in data for field in REQUIRED_RESULT_FIELDS)
 
-# Initialize LLM
 llm = LLM(
-    model="openai/gpt-5-nano"
+    model="gemini/gemini-2.5-flash-lite",
+    temperature=0.1,
+    api_key=get_current_api_key()
 )
+
 # MISTRAL_API_KEY=os.getenv("MISTRAL_API_KEY"),
 # llm = LLM(
 #     model="mistral/mistral-small-latest",
