@@ -1,0 +1,507 @@
+{
+  "meta": {
+    "last_updated": "2025-11",
+    "market": "India",
+    "currency": "INR",
+    "note": "All numeric values are rough, synthetic estimates for building and training an AI agent. Do NOT use this directly for real-life investment decisions.",
+    "usage": "Ranking / recommendation / experimentation for a mutual fund suggestion agent.",
+    "values_are_estimates": true
+  },
+  "categories": [
+
+    {
+      "id": "nifty_50_index",
+      "display_name": "Nifty 50 Index Funds (Large Cap)",
+      "role_in_portfolio": "core",
+      "funds": [
+        {
+          "scheme_name": "UTI Nifty 50 Index Fund - Direct Plan Growth",
+          "amc": "UTI",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 50 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.1, "2y": 12.4, "3y": 13.3, "5y": 16.2 },
+          "risk_metrics_est": { "sharpe": 0.78, "beta": 1.00, "alpha": 0.4 },
+          "tags": ["core", "large_cap", "low_cost"]
+        },
+        {
+          "scheme_name": "ICICI Prudential Nifty 50 Index Fund - Direct Plan Growth",
+          "amc": "ICICI Prudential",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 50 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.0, "2y": 12.1, "3y": 13.0, "5y": 16.0 },
+          "risk_metrics_est": { "sharpe": 0.77, "beta": 1.01, "alpha": 0.3 },
+          "tags": ["core", "large_cap", "low_cost"]
+        },
+        {
+          "scheme_name": "HDFC Nifty 50 Index Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 50 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.3, "2y": 12.7, "3y": 13.5, "5y": 16.4 },
+          "risk_metrics_est": { "sharpe": 0.79, "beta": 1.00, "alpha": 0.5 },
+          "tags": ["core", "large_cap", "low_cost"]
+        }
+      ]
+    },
+
+    {
+      "id": "nifty_100_index",
+      "display_name": "Nifty 100 Index Funds",
+      "role_in_portfolio": "core_growth",
+      "funds": [
+        {
+          "scheme_name": "UTI Nifty 100 Index Fund - Direct Plan Growth",
+          "amc": "UTI",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.4, "2y": 13.8, "3y": 14.1, "5y": 17.3 },
+          "risk_metrics_est": { "sharpe": 0.80, "beta": 1.02, "alpha": 0.6 },
+          "tags": ["core_growth", "large_mid_cap"]
+        },
+        {
+          "scheme_name": "Nippon India Nifty 100 Fund - Direct Plan Growth",
+          "amc": "Nippon India",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.1, "2y": 13.4, "3y": 13.9, "5y": 17.0 },
+          "risk_metrics_est": { "sharpe": 0.79, "beta": 1.03, "alpha": 0.5 },
+          "tags": ["core_growth", "large_mid_cap"]
+        },
+        {
+          "scheme_name": "HDFC Nifty 100 Index Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.3, "2y": 13.6, "3y": 14.0, "5y": 17.1 },
+          "risk_metrics_est": { "sharpe": 0.80, "beta": 1.02, "alpha": 0.6 },
+          "tags": ["core_growth", "large_mid_cap"]
+        }
+      ]
+    },
+
+    {
+      "id": "large_cap_active",
+      "display_name": "Large Cap Funds (Active)",
+      "role_in_portfolio": "core_plus",
+      "funds": [
+        {
+          "scheme_name": "ICICI Prudential Large Cap Fund - Direct Plan Growth",
+          "amc": "ICICI Prudential",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.2, "2y": 16.1, "3y": 18.7, "5y": 20.7 },
+          "risk_metrics_est": { "sharpe": 0.90, "beta": 0.98, "alpha": 3.5 },
+          "tags": ["core_plus", "large_cap", "alpha_seeking"]
+        },
+        {
+          "scheme_name": "SBI Bluechip Fund - Direct Plan Growth",
+          "amc": "SBI",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "S&P BSE 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.8, "2y": 15.2, "3y": 17.4, "5y": 19.2 },
+          "risk_metrics_est": { "sharpe": 0.86, "beta": 0.95, "alpha": 2.8 },
+          "tags": ["core_plus", "large_cap"]
+        },
+        {
+          "scheme_name": "HDFC Top 100 Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 100 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.9, "2y": 15.5, "3y": 18.0, "5y": 19.8 },
+          "risk_metrics_est": { "sharpe": 0.88, "beta": 0.97, "alpha": 3.0 },
+          "tags": ["core_plus", "large_cap"]
+        }
+      ]
+    },
+
+    {
+      "id": "flexi_cap",
+      "display_name": "Flexi Cap Funds",
+      "role_in_portfolio": "core_flex",
+      "funds": [
+        {
+          "scheme_name": "Parag Parikh Flexi Cap Fund - Direct Plan Growth",
+          "amc": "PPFAS",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.1, "2y": 19.6, "3y": 21.8, "5y": 21.8 },
+          "risk_metrics_est": { "sharpe": 0.92, "beta": 0.84, "alpha": 6.2 },
+          "tags": ["core", "flexi_cap", "global_exposure"]
+        },
+        {
+          "scheme_name": "Kotak Flexi Cap Fund - Direct Plan Growth",
+          "amc": "Kotak",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.2, "2y": 18.1, "3y": 20.2, "5y": 19.5 },
+          "risk_metrics_est": { "sharpe": 0.88, "beta": 0.90, "alpha": 4.5 },
+          "tags": ["core", "flexi_cap"]
+        },
+        {
+          "scheme_name": "Canara Robeco Flexi Cap Fund - Direct Plan Growth",
+          "amc": "Canara Robeco",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.7, "2y": 17.9, "3y": 19.8, "5y": 19.2 },
+          "risk_metrics_est": { "sharpe": 0.86, "beta": 0.88, "alpha": 4.1 },
+          "tags": ["core", "flexi_cap"]
+        }
+      ]
+    },
+
+    {
+      "id": "mid_cap",
+      "display_name": "Mid Cap Funds",
+      "role_in_portfolio": "growth",
+      "funds": [
+        {
+          "scheme_name": "HDFC Mid Cap Opportunities Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Midcap 150 TRI",
+          "trailing_returns_cagr_percent": { "1y": 10.4, "2y": 22.1, "3y": 26.7, "5y": 27.8 },
+          "risk_metrics_est": { "sharpe": 0.97, "beta": 1.18, "alpha": 8.6 },
+          "tags": ["growth", "mid_cap"]
+        },
+        {
+          "scheme_name": "Motilal Oswal Midcap Fund - Direct Plan Growth",
+          "amc": "Motilal Oswal",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Midcap 150 TRI",
+          "trailing_returns_cagr_percent": { "1y": 8.9, "2y": 21.3, "3y": 25.4, "5y": 26.7 },
+          "risk_metrics_est": { "sharpe": 0.94, "beta": 1.21, "alpha": 7.8 },
+          "tags": ["growth", "mid_cap"]
+        },
+        {
+          "scheme_name": "Kotak Emerging Equity Fund - Direct Plan Growth",
+          "amc": "Kotak",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Midcap 150 TRI",
+          "trailing_returns_cagr_percent": { "1y": 9.4, "2y": 20.7, "3y": 24.9, "5y": 26.1 },
+          "risk_metrics_est": { "sharpe": 0.93, "beta": 1.19, "alpha": 7.4 },
+          "tags": ["growth", "mid_cap"]
+        }
+      ]
+    },
+
+    {
+      "id": "small_cap",
+      "display_name": "Small Cap Funds",
+      "role_in_portfolio": "aggressive_growth",
+      "funds": [
+        {
+          "scheme_name": "SBI Small Cap Fund - Direct Plan Growth",
+          "amc": "SBI",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "S&P BSE 250 SmallCap TRI",
+          "trailing_returns_cagr_percent": { "1y": 5.3, "2y": 18.2, "3y": 22.9, "5y": 26.4 },
+          "risk_metrics_est": { "sharpe": 0.89, "beta": 1.34, "alpha": 9.2 },
+          "tags": ["aggressive", "small_cap"]
+        },
+        {
+          "scheme_name": "Axis Small Cap Fund - Direct Plan Growth",
+          "amc": "Axis",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Smallcap 250 TRI",
+          "trailing_returns_cagr_percent": { "1y": 2.2, "2y": 14.6, "3y": 19.8, "5y": 24.9 },
+          "risk_metrics_est": { "sharpe": 0.83, "beta": 1.30, "alpha": 7.1 },
+          "tags": ["aggressive", "small_cap"]
+        },
+        {
+          "scheme_name": "Nippon India Small Cap Fund - Direct Plan Growth",
+          "amc": "Nippon India",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Smallcap 250 TRI",
+          "trailing_returns_cagr_percent": { "1y": 7.8, "2y": 20.1, "3y": 25.2, "5y": 29.4 },
+          "risk_metrics_est": { "sharpe": 0.96, "beta": 1.38, "alpha": 10.4 },
+          "tags": ["aggressive", "small_cap"]
+        }
+      ]
+    },
+
+    {
+      "id": "momentum",
+      "display_name": "Momentum / Factor Funds",
+      "role_in_portfolio": "satellite_factor",
+      "funds": [
+        {
+          "scheme_name": "UTI Nifty200 Momentum 30 Index Fund - Direct Plan Growth",
+          "amc": "UTI",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty200 Momentum 30 TRI",
+          "trailing_returns_cagr_percent": { "1y": -16.1, "2y": 14.2, "3y": 18.0, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.75, "beta": 1.20, "alpha": 4.0 },
+          "tags": ["factor", "momentum", "high_volatility"]
+        },
+        {
+          "scheme_name": "Nippon India Nifty 200 Momentum 30 ETF",
+          "amc": "Nippon India",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty200 Momentum 30 TRI",
+          "trailing_returns_cagr_percent": { "1y": -15.6, "2y": 14.5, "3y": 17.7, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.74, "beta": 1.22, "alpha": 3.8 },
+          "tags": ["factor", "momentum", "etf"]
+        },
+        {
+          "scheme_name": "ICICI Prudential Nifty 200 Momentum 30 ETF",
+          "amc": "ICICI Prudential",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty200 Momentum 30 TRI",
+          "trailing_returns_cagr_percent": { "1y": -15.9, "2y": 14.0, "3y": 17.5, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.74, "beta": 1.21, "alpha": 3.7 },
+          "tags": ["factor", "momentum", "etf"]
+        }
+      ]
+    },
+
+    {
+      "id": "it_technology",
+      "display_name": "IT / Technology Funds",
+      "role_in_portfolio": "thematic_satellite",
+      "funds": [
+        {
+          "scheme_name": "ICICI Prudential Technology Fund - Direct Plan Growth",
+          "amc": "ICICI Prudential",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty IT TRI",
+          "trailing_returns_cagr_percent": { "1y": -3.6, "2y": 9.8, "3y": 14.2, "5y": 19.9 },
+          "risk_metrics_est": { "sharpe": 0.81, "beta": 1.12, "alpha": 4.5 },
+          "tags": ["sectoral", "it", "thematic"]
+        },
+        {
+          "scheme_name": "Tata Digital India Fund - Direct Plan Growth",
+          "amc": "Tata",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty IT TRI",
+          "trailing_returns_cagr_percent": { "1y": -5.2, "2y": 8.4, "3y": 13.7, "5y": 18.3 },
+          "risk_metrics_est": { "sharpe": 0.79, "beta": 1.14, "alpha": 3.9 },
+          "tags": ["sectoral", "it", "thematic"]
+        },
+        {
+          "scheme_name": "Aditya Birla Sun Life Digital India Fund - Direct Plan Growth",
+          "amc": "Aditya Birla Sun Life",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty IT TRI",
+          "trailing_returns_cagr_percent": { "1y": -4.4, "2y": 9.1, "3y": 14.8, "5y": 20.6 },
+          "risk_metrics_est": { "sharpe": 0.82, "beta": 1.13, "alpha": 4.8 },
+          "tags": ["sectoral", "it", "thematic"]
+        }
+      ]
+    },
+
+    {
+      "id": "defence",
+      "display_name": "Defence Thematic Funds",
+      "role_in_portfolio": "high_conviction_thematic",
+      "funds": [
+        {
+          "scheme_name": "Motilal Oswal Nifty India Defence Index Fund - Direct Plan Growth",
+          "amc": "Motilal Oswal",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty India Defence TRI",
+          "trailing_returns_cagr_percent": { "1y": 20.7, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.93, "beta": 1.30, "alpha": 7.5 },
+          "tags": ["sectoral", "defence", "thematic"]
+        },
+        {
+          "scheme_name": "HDFC Defence Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty India Defence TRI",
+          "trailing_returns_cagr_percent": { "1y": 11.2, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.88, "beta": 1.26, "alpha": 6.8 },
+          "tags": ["sectoral", "defence", "thematic"]
+        },
+        {
+          "scheme_name": "Aditya Birla Sun Life Nifty India Defence Index Fund - Direct Plan Growth",
+          "amc": "Aditya Birla Sun Life",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty India Defence TRI",
+          "trailing_returns_cagr_percent": { "1y": 19.8, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.92, "beta": 1.29, "alpha": 7.1 },
+          "tags": ["sectoral", "defence", "thematic"]
+        }
+      ]
+    },
+
+    {
+      "id": "real_estate",
+      "display_name": "Real Estate / Realty Funds",
+      "role_in_portfolio": "cyclical_thematic",
+      "funds": [
+        {
+          "scheme_name": "HDFC Nifty Realty Index Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Realty TRI",
+          "trailing_returns_cagr_percent": { "1y": -11.8, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.60, "beta": 1.35, "alpha": 2.0 },
+          "tags": ["sectoral", "realty", "cyclical"]
+        },
+        {
+          "scheme_name": "ICICI Prudential Nifty Realty Index Fund - Direct Plan Growth",
+          "amc": "ICICI Prudential",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Realty TRI",
+          "trailing_returns_cagr_percent": { "1y": -10.9, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.61, "beta": 1.36, "alpha": 2.1 },
+          "tags": ["sectoral", "realty", "cyclical"]
+        },
+        {
+          "scheme_name": "Kotak Nifty Realty ETF",
+          "amc": "Kotak",
+          "is_index_fund": true,
+          "risk_level": "Very High",
+          "benchmark": "Nifty Realty TRI",
+          "trailing_returns_cagr_percent": { "1y": -11.2, "2y": null, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.60, "beta": 1.34, "alpha": 2.0 },
+          "tags": ["sectoral", "realty", "cyclical", "etf"]
+        }
+      ]
+    },
+
+    {
+      "id": "gold",
+      "display_name": "Gold Funds",
+      "role_in_portfolio": "diversifier_hedge",
+      "funds": [
+        {
+          "scheme_name": "SBI Gold Fund - Direct Plan Growth",
+          "amc": "SBI",
+          "is_index_fund": false,
+          "risk_level": "High",
+          "benchmark": "Domestic Gold Price",
+          "trailing_returns_cagr_percent": { "1y": 61.1, "2y": 44.7, "3y": 31.5, "5y": 27.9 },
+          "risk_metrics_est": { "sharpe": 0.72, "beta": 0.20, "alpha": 2.5 },
+          "tags": ["gold", "hedge", "commodity"]
+        },
+        {
+          "scheme_name": "HDFC Gold Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": false,
+          "risk_level": "High",
+          "benchmark": "Domestic Gold Price",
+          "trailing_returns_cagr_percent": { "1y": 60.4, "2y": 43.1, "3y": 30.7, "5y": 27.1 },
+          "risk_metrics_est": { "sharpe": 0.71, "beta": 0.20, "alpha": 2.3 },
+          "tags": ["gold", "hedge", "commodity"]
+        },
+        {
+          "scheme_name": "ICICI Prudential Regular Gold Savings Fund (FOF) - Direct Plan",
+          "amc": "ICICI Prudential",
+          "is_index_fund": false,
+          "risk_level": "High",
+          "benchmark": "Domestic Gold Price",
+          "trailing_returns_cagr_percent": { "1y": 60.8, "2y": 43.8, "3y": 31.0, "5y": 27.4 },
+          "risk_metrics_est": { "sharpe": 0.71, "beta": 0.20, "alpha": 2.4 },
+          "tags": ["gold", "hedge", "commodity"]
+        }
+      ]
+    },
+
+    {
+      "id": "silver",
+      "display_name": "Silver Funds / FoFs",
+      "role_in_portfolio": "aggressive_commodity",
+      "funds": [
+        {
+          "scheme_name": "ICICI Prudential Silver ETF Fund of Fund - Direct Plan Growth",
+          "amc": "ICICI Prudential",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Domestic Silver Price",
+          "trailing_returns_cagr_percent": { "1y": 78.5, "2y": 36.0, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.82, "beta": 0.40, "alpha": 4.0 },
+          "tags": ["silver", "commodity", "very_high_risk"]
+        },
+        {
+          "scheme_name": "HDFC Silver ETF Fund of Fund - Direct Plan Growth",
+          "amc": "HDFC",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Domestic Silver Price",
+          "trailing_returns_cagr_percent": { "1y": 78.8, "2y": 36.4, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.83, "beta": 0.40, "alpha": 4.1 },
+          "tags": ["silver", "commodity", "very_high_risk"]
+        },
+        {
+          "scheme_name": "Nippon India Silver ETF Fund of Fund - Direct Plan Growth",
+          "amc": "Nippon India",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Domestic Silver Price",
+          "trailing_returns_cagr_percent": { "1y": 78.8, "2y": 36.0, "3y": null, "5y": null },
+          "risk_metrics_est": { "sharpe": 0.82, "beta": 0.40, "alpha": 4.0 },
+          "tags": ["silver", "commodity", "very_high_risk"]
+        }
+      ]
+    },
+
+    {
+      "id": "elss_tax_saver",
+      "display_name": "ELSS / Tax Saver Funds",
+      "role_in_portfolio": "tax_saving_equity",
+      "funds": [
+        {
+          "scheme_name": "Mirae Asset ELSS Tax Saver Fund - Direct Plan Growth",
+          "amc": "Mirae Asset",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 21.1, "2y": 20.7, "3y": 21.3, "5y": 20.1 },
+          "risk_metrics_est": { "sharpe": 0.93, "beta": 0.98, "alpha": 5.0 },
+          "tags": ["elss", "tax_saving", "long_term"]
+        },
+        {
+          "scheme_name": "Canara Robeco ELSS Tax Saver Fund - Direct Plan Growth",
+          "amc": "Canara Robeco",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 19.4, "2y": 19.1, "3y": 20.2, "5y": 19.7 },
+          "risk_metrics_est": { "sharpe": 0.90, "beta": 0.96, "alpha": 4.5 },
+          "tags": ["elss", "tax_saving", "long_term"]
+        },
+        {
+          "scheme_name": "Kotak ELSS Tax Saver Fund - Direct Plan Growth",
+          "amc": "Kotak",
+          "is_index_fund": false,
+          "risk_level": "Very High",
+          "benchmark": "Nifty 500 TRI",
+          "trailing_returns_cagr_percent": { "1y": 18.7, "2y": 18.4, "3y": 19.6, "5y": 19.0 },
+          "risk_metrics_est": { "sharpe": 0.88, "beta": 0.97, "alpha": 4.0 },
+          "tags": ["elss", "tax_saving", "long_term"]
+        }
+      ]
+    }
+
+  ]
+}

@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 
 from setu_service import setu_service, SETU_REDIRECT_URL
 from firestore_service import firestore_service
+from agents.ai_coach_langgraph import get_financial_coaching_langgraph
 
 app = FastAPI(title="FinPath API", version="1.0.0")
 
@@ -53,6 +54,12 @@ class ReminderData(BaseModel):
 class ConfirmPaymentRequest(BaseModel):
     due_date: str
     amount: float
+
+
+class AIChatRequest(BaseModel):
+    userId: str
+    question: str
+    conversationContext: Optional[Dict[str, Any]] = None
 
 # Health check endpoint
 @app.get("/health")
@@ -458,78 +465,100 @@ async def confirm_goal_payment(user_id: str, goal_id: str, req: ConfirmPaymentRe
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to confirm payment: {str(e)}")
 
-# Alerts Endpoints
-@app.get("/users/{user_id}/alerts")
-async def get_user_alerts(user_id: str):
-    """Get user's alerts"""
-    try:
-        alerts_ref = firestore_service.db.collection('users').document(user_id).collection('alerts')
-        docs = alerts_ref.order_by('created_at', direction='DESCENDING').stream()
-        
-        alerts = []
-        for doc in docs:
-            alert_data = doc.to_dict()
-            alert_data['id'] = doc.id
-            
-            # Convert Firestore timestamp to ISO string if needed
-            if 'created_at' in alert_data and hasattr(alert_data['created_at'], 'isoformat'):
-                alert_data['created_at'] = alert_data['created_at'].isoformat()
-            if 'updated_at' in alert_data and hasattr(alert_data['updated_at'], 'isoformat'):
-                alert_data['updated_at'] = alert_data['updated_at'].isoformat()
-            
-            # Ensure is_resolved field exists
-            if 'is_resolved' not in alert_data:
-                alert_data['is_resolved'] = False
-            
-            alerts.append(alert_data)
-        
-        return alerts
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get alerts: {str(e)}")
 
-@app.put("/users/{user_id}/alerts/{alert_id}/resolve")
-async def resolve_alert(user_id: str, alert_id: str):
-    """Mark an alert as resolved"""
+# AI Coach Endpoints
+@app.post("/ai/chat")
+async def ai_chat(request: AIChatRequest):
+    """
+    Chat with the AI financial coach.
+    This wraps agents.ai_coach.get_financial_coaching for frontend consumption.
+    """
     try:
-        alert_ref = firestore_service.db.collection('users').document(user_id).collection('alerts').document(alert_id)
-        
-        # Check if alert exists
-        alert_doc = alert_ref.get()
-        if not alert_doc.exists:
-            raise HTTPException(status_code=404, detail="Alert not found")
-        
-        # Update alert
-        alert_ref.update({
-            'is_resolved': True,
-            'resolved_at': datetime.now(),
-            'updated_at': datetime.now()
-        })
-        
-        return {"message": "Alert resolved successfully"}
+        result: Dict[str, Any]
+        try:
+            from agents.ai_coach import get_financial_coaching
+            result = await get_financial_coaching(
+                user_id=request.userId,
+                user_query=request.question,
+                conversation_context=request.conversationContext or {},
+            )
+        except Exception:
+            result = get_financial_coaching_langgraph(
+                user_id=request.userId,
+                user_query=request.question,
+                conversation_context=request.conversationContext or {},
+            )
+
+        if not result.get("success"):
+            raise HTTPException(
+                status_code=500,
+                detail=f"Financial coaching failed: {result.get('error', 'Unknown error')}",
+            )
+
+        coach_response = result.get("coach_response", {}) or {}
+
+        # Prefer a dedicated direct_answer field if present, else fallback to stringifying the response
+        direct_answer = coach_response.get("direct_answer")
+        if not direct_answer:
+            # Fallback: basic readable summary
+            direct_answer = coach_response.get("summary") or str(coach_response)
+
+        # This shape matches what frontend expects: res.data.answer
+        return {
+            "answer": direct_answer,
+            "coach_response": coach_response,
+            "model": result.get("model"),
+            "timestamp": result.get("timestamp"),
+        }
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to resolve alert: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"AI coach error: {str(e)}")
 
-@app.delete("/users/{user_id}/alerts/{alert_id}")
-async def delete_alert(user_id: str, alert_id: str):
-    """Delete an alert"""
+
+# LangGraph-based AI Coach Endpoint (fast path)
+@app.post("/ai/chat-fast")
+async def ai_chat_fast(request: AIChatRequest):
+    """
+    Chat with the AI financial coach (LangGraph path).
+    Same response shape as /ai/chat to allow frontend switching.
+    """
+    print(f"[/ai/chat-fast] Received request: userId={request.userId}, question={request.question[:50]}")
     try:
-        alert_ref = firestore_service.db.collection('users').document(user_id).collection('alerts').document(alert_id)
-        
-        # Check if alert exists
-        alert_doc = alert_ref.get()
-        if not alert_doc.exists:
-            raise HTTPException(status_code=404, detail="Alert not found")
-        
-        # Delete alert
-        alert_ref.delete()
-        
-        return {"message": "Alert deleted successfully"}
-    except HTTPException:
+        print(f"[/ai/chat-fast] Calling get_financial_coaching_langgraph...")
+        result = get_financial_coaching_langgraph(
+            user_id=request.userId,
+            user_query=request.question,
+            conversation_context=request.conversationContext or {},
+        )
+        print(f"[/ai/chat-fast] Result received: success={result.get('success')}")
+
+        if not result.get("success"):
+            detail = f"Financial coaching failed: {result.get('error', 'Unknown error')}"
+            print(f"[/ai/chat-fast] ERROR: {detail}")
+            raise HTTPException(status_code=500, detail=detail)
+
+        coach_response = result.get("coach_response", {}) or {}
+        direct_answer = coach_response.get("direct_answer")
+        if not direct_answer:
+            direct_answer = coach_response.get("summary") or str(coach_response)
+
+        response = {
+            "answer": direct_answer,
+            "coach_response": coach_response,
+            "model": result.get("model"),
+            "timestamp": result.get("timestamp"),
+        }
+        print(f"[/ai/chat-fast] Returning response successfully")
+        return response
+    except HTTPException as e:
+        print(f"[/ai/chat-fast] HTTPException: {e.detail}")
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete alert: {str(e)}")
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"[/ai/chat-fast] EXCEPTION: {str(e)}\n{error_trace}")
+        raise HTTPException(status_code=500, detail=f"AI coach error: {str(e)}")
 
 
 if __name__ == "__main__":
